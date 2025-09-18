@@ -51,7 +51,7 @@ def fetch_naver_weather():
         condition = condition_tag.get_text(strip=True)
         weather_list.append(f'날씨 상태: {condition}')
 
-    summary_tags = soup.select('dl.summary_list > div.item_today > span.txt')
+    summary_tags = soup.select('dl.summary_list > div.sort > dd.desc')
     labels = ['체감 온도', '습도', '풍속']
     for i, tag in enumerate(summary_tags[:3]):
         weather_list.append(f'{labels[i]}: {tag.get_text(strip=True)}')
