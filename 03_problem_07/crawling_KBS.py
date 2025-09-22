@@ -1,7 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 
-
 def fetch_kbs_headlines():
     url = 'https://news.kbs.co.kr/news/pc/main/main.html'
     response = requests.get(url)
@@ -29,7 +28,6 @@ def fetch_kbs_headlines():
 
     return headline_list
 
-
 def fetch_naver_weather():
     url = 'https://search.naver.com/search.naver?query=날씨'
     response = requests.get(url)
@@ -51,13 +49,12 @@ def fetch_naver_weather():
         condition = condition_tag.get_text(strip=True)
         weather_list.append(f'날씨 상태: {condition}')
 
-    summary_tags = soup.select('dl.summary_list > div.item_today > span.txt')
+    summary_tags = soup.select('dl.summary_list > div.sort > dd.desc')
     labels = ['체감 온도', '습도', '풍속']
     for i, tag in enumerate(summary_tags[:3]):
         weather_list.append(f'{labels[i]}: {tag.get_text(strip=True)}')
 
     return weather_list
-
 
 def fetch_naver_popular_stocks():
     url = 'https://finance.naver.com/sise/lastsearch2.naver'
@@ -81,7 +78,6 @@ def fetch_naver_popular_stocks():
 
     return stock_list
 
-
 def main():
     while True:
         print('\n--- 정보 선택 ---')
@@ -94,19 +90,19 @@ def main():
 
         if choice == '1':
             headlines = fetch_kbs_headlines()
-            print('\n📢 KBS 헤드라인 뉴스:')
+            print('\nKBS 헤드라인 뉴스:')
             for i, title in enumerate(headlines, start=1):
                 print(f'{i}. {title}')
 
         elif choice == '2':
             weather = fetch_naver_weather()
-            print('\n🌤️ 현재 날씨 정보:')
+            print('\n현재 날씨 정보:')
             for item in weather:
                 print('-', item)
 
         elif choice == '3':
             stocks = fetch_naver_popular_stocks()
-            print('\n📈 인기 검색 주식 TOP 5:')
+            print('\n인기 검색 주식 TOP 5:')
             for i, item in enumerate(stocks, start=1):
                 print(f'{i}. {item}')
 
@@ -116,7 +112,6 @@ def main():
 
         else:
             print('잘못된 입력입니다. 0~3 중에서 선택하세요.')
-
 
 if __name__ == '__main__':
     main()
