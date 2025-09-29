@@ -41,7 +41,7 @@ def get_mail_titles(driver):
 
     titles = []
     try:
-        mail_elements = driver.find_elements(By.CSS_SELECTOR, '.mail_title')
+        mail_elements = driver.find_elements(By.CSS_SELECTOR, '.mail_title_link span.text')
         for elem in mail_elements[:10]:  # 앞 10개만 수집
             titles.append(elem.text.strip())
     except Exception:
@@ -61,7 +61,7 @@ def main():
 
     print('📧 로그인 후 수집한 메일 제목:')
     for t in mail_titles:
-        print('-', t)
+        print('\n-', t)
 
     driver.quit()
 
