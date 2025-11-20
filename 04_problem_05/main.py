@@ -1,11 +1,10 @@
 from fastapi import FastAPI
-from database import Base, engine
+from domain.question import question_router
 
 app = FastAPI()
 
-# 테이블이 없으면 생성
-Base.metadata.create_all(bind=engine)
+app.include_router(question_router.router)
 
 @app.get('/')
-def read_root():
-    return {'message': 'Hello FastAPI Board!'}
+def root():
+    return {'message': 'Hello, FastAPI'}
